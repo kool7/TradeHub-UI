@@ -1,29 +1,26 @@
 import Header from "./components/Header";
+import { HOME } from "./constants/pages/Home.const";
 
 export default async function Home() {
   const products: Product[] = await getData();
 
   return (
-    <div className="container mx-auto p-4">
+    <div className={HOME.CONTAINER}>
       <Header />
       {products.length === 0 ? (
-        <p className="text-2xl font-semibold text-center text-gray-600">
-          No data available.
-        </p>
+        <p className={HOME.NO_DATA_AVAILABLE}>No data available.</p>
       ) : (
-        <ul className="divide-y divide-gray-300">
+        <ul className={HOME.UL}>
           {products.map((product: any) => (
-            <li key={product.id} className="py-4">
-              <div className="flex justify-between items-center">
+            <li key={product.id} className={HOME.LI}>
+              <div className={HOME.LI_DIV}>
                 <div>
-                  <h2 className="text-lg font-semibold">{product.name}</h2>
+                  <h2 className={HOME.PRODUCT_NAME}>{product.name}</h2>
                   <p>{product.description}</p>
                 </div>
-                <div className="text-right">
+                <div className={HOME.LI_SUBDIV_2}>
                   <p>Units: {product.units}</p>
-                  <p className="text-green-600 font-semibold">
-                    Price: ${product.price}
-                  </p>
+                  <p className={HOME.PRODUCT_PRICE}>Price: ${product.price}</p>
                 </div>
               </div>
             </li>
@@ -38,7 +35,7 @@ async function getData() {
   const res = await fetch(process.env.NEXT_PUBLIC_MOCK_REST_URL as string);
 
   if (!res.ok) {
-    return ([]);
+    return [];
   }
 
   return res.json();
